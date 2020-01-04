@@ -3,4 +3,4 @@ project(trktc)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(trktc main.cpp)
+add_executable(trktc src/main.cpp src/model.hpp)
