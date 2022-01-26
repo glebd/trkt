@@ -1,6 +1,0 @@
-[requires]
-poco/1.11.1
-openssl/1.1.1l
-
-[generators]
-cmake
