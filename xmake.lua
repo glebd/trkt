@@ -1,0 +1,6 @@
+set_languages("c++20")
+add_requires("vcpkg::fmt", {alias = "fmt"})
+target("trkt")
+    set_kind("binary")
+    add_files("src/*.cpp")
+    add_packages("fmt")

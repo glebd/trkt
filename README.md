@@ -1,18 +1,34 @@
-TRKT
-====
+# TRKTCLI
 
-Trakt.tv tools and experiments
+A [trakt.tv](https://trakt.tv) command-line interface written in C++20.
 
-References
-==========
+## Installing prerequisites
 
-API
----
+### Mac
 
-* [Trakt.tv API](https://trakt.docs.apiary.io/#introduction/create-an-app)
+* Install Xcode 13+ from the Mac App Store.
+* Install [Homebrew](https://brew.sh).
+* Install [Meson Build](https://mesonbuild.com).
 
-Project layout
---------------
+```bash
+brew install conan
+conan remote add -i 0 conancenter https://center.conan.io
+brew install meson
+brew install ninja
+brew install python3
+pip3 install rich
+```
 
-* [Pitchfork](https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs)
-* [C++ Reference: libraries](https://en.cppreference.com/w/cpp/links/libs)
+## Installing dependencies
+
+```bash
+meson wrap install fmt
+```
+
+## Building TRKTCLI
+
+```bash
+meson configure build
+cd build
+meson compile
+```
