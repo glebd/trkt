@@ -11,8 +11,12 @@ A [trakt.tv](https://trakt.tv) command-line interface written in C++20.
 * Install [Meson Build](https://mesonbuild.com).
 
 ```bash
+brew install conan
+conan remote add -i 0 conancenter https://center.conan.io
 brew install meson
 brew install ninja
+brew install python3
+pip3 install rich
 ```
 
 ## Installing dependencies
