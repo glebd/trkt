@@ -1,4 +1,4 @@
-# TRKTCLI
+# TRKT
 
 A [trakt.tv](https://trakt.tv) command-line interface written in C++20.
 
@@ -8,27 +8,48 @@ A [trakt.tv](https://trakt.tv) command-line interface written in C++20.
 
 * Install Xcode 13+ from the Mac App Store.
 * Install [Homebrew](https://brew.sh).
-* Install [Meson Build](https://mesonbuild.com).
+* Install [Xmake](https://xmake.io).
 
 ```bash
-brew install conan
-conan remote add -i 0 conancenter https://center.conan.io
-brew install meson
-brew install ninja
+brew install git
+brew install xmake
 brew install python3
 pip3 install rich
 ```
 
-## Installing dependencies
+## Dependencies
+
+### vcpkg
 
 ```bash
-meson wrap install fmt
+git submodule init
+git submodule update
 ```
 
-## Building TRKTCLI
+### Libraries
+
+* [{fmt}](https://fmt.dev)
+* [C++ REST SDK](https://github.com/Microsoft/cpprestsdk)
+
+## Building TRKT
 
 ```bash
-meson configure build
-cd build
-meson compile
+xmake f -y --vcpkg=`pwd`/vcpkg
 ```
+
+## Links
+
+### API
+
+* [Trakt.tv API](https://trakt.docs.apiary.io/#introduction/create-an-app)
+
+### Project layout
+
+* [Pitchfork](https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs)
+* [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
+* [cpp-starter-project by Jason Turner](https://github.com/cpp-best-practices/cpp_starter_project)
+* [C++ Reference: libraries](https://en.cppreference.com/w/cpp/links/libs)
+
+### Examples
+
+* [Revisited: Full-fledged client-server example with C++ REST SDK 2.10](https://mariusbancila.ro/blog/2017/11/19/revisited-full-fledged-client-server-example-with-c-rest-sdk-2-10/)
