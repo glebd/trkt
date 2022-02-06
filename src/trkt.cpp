@@ -8,7 +8,7 @@
 int main(int /*argc*/, char** /*argv*/)
 {
     try {
-        cli::CmdHandler colorCmd;
+        cli::SetColor();
         auto rootMenu = std::make_unique<cli::Menu>("trkt");
         cli::Cli cli( std::move(rootMenu) );
         cli.ExitAction( [](auto& out){ out << "Bye.\n"; } );
