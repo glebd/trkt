@@ -57,6 +57,11 @@ xmake f -y --vcpkg=`pwd`/vcpkg
 * [expected](https://github.com/TartanLlama/expected) - C++11/14/17 `std::expected` with functional-style extensions
 * [optional](https://github.com/TartanLlama/optional) - C++11/14/17 `std::optional` with functional-style extensions and reference support
 
+### i18n
+
+* [tiny-utf8](https://github.com/DuffsDevice/tiny-utf8)
+* [utfcpp](https://github.com/nemtrif/utfcpp)
+
 ### Tasks
 
 * [taskflow](https://github.com/taskflow/taskflow)
@@ -70,6 +75,7 @@ xmake f -y --vcpkg=`pwd`/vcpkg
 * [cpp-terminal](https://github.com/jupyter-xeus/cpp-terminal) - Small header only C++ library for writing multiplatform terminal applications
 * [FTXUI](https://github.com/ArthurSonzogni/FTXUI) - C++ Functional Terminal User Interface
 * [imtui](https://github.com/ggerganov/imtui) - Immediate Mode Text-based User Interface C++ Library ([demo](https://imtui.ggerganov.com))
+* [rang](https://github.com/agauniyal/rang) - A Minimal, Header only Modern C++ library for terminal goodies
 
 ### Logging
 
