@@ -10,7 +10,7 @@ int main(int /*argc*/, char** /*argv*/)
     cli::SetColor();
     auto rootMenu = std::make_unique<cli::Menu>("trkt");
     cli::Cli cli(std::move(rootMenu));
-    cli.ExitAction([](auto& out) { out << "Bye.\n"; });
+    cli.ExitAction([](auto& os) { os << "Bye.\n"; });
     cli.StdExceptionHandler([](std::ostream& os, const std::string& cmd, const std::exception& e) {
       os << fmt::format("Exception '{}' caught handling command '{}'\n", e.what(), cmd);
     });
