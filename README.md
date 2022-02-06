@@ -24,6 +24,7 @@ pip3 install rich
 ```bash
 git submodule init
 git submodule update
+vcpkg/vcpkg integrate install
 ```
 
 ### Libraries
