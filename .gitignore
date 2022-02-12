@@ -4,3 +4,5 @@ cmake-build-*/**
 CMakeLists.txt
 
 .idea/**
+
+.vscode/compile_commands.json
