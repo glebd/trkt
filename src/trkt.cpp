@@ -145,19 +145,23 @@ private:
 
 //
 // Specialized class for Trakt.tv OAuth 2.0 session.
+// Based on https://github.com/Microsoft/cpprestsdk/blob/master/Release/samples/Oauth2Client/Oauth2Client.cpp
 //
 class trakt_session_sample : public oauth2_session_sample
 {
+private:
+  inline static char const* m_api_url = "https://api-staging.trakt.tv";
+
 public:
   trakt_session_sample(const std::string& key, const std::string& secret)
-    : oauth2_session_sample(U("Dropbox"), key, secret, U("https://www.dropbox.com/1/oauth2/authorize"),
-                            U("https://api.dropbox.com/1/oauth2/token"), U("http://localhost:8889/"))
+    : oauth2_session_sample(U("Trakt"), key, secret, U(fmt::format("{}/oauth/authorize", m_api_url)),
+                            U(fmt::format("{}/oauth/token", m_api_url)), U("http://localhost:8889/"))
   {}
 
 protected:
   void run_internal() override
   {
-    web::http::client::http_client api(U("https://api.dropbox.com/1/"), m_http_config);
+    web::http::client::http_client api(U(m_api_url), m_http_config);
     ucout << "Requesting account information:" << std::endl;
     ucout << "Information: " << api.request(web::http::methods::GET, U("account/info")).get().extract_json().get()
           << std::endl;
