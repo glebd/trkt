@@ -39,7 +39,7 @@ public:
               token_task.wait();
               m_tce.set(true);
             } catch (const web::http::oauth2::experimental::oauth2_exception& e) {
-              ucout << "Error: " << e.what() << std::endl;
+              ucout << "Error: " << e.what() << "\n";
               m_tce.set(false);
             }
           });
@@ -102,20 +102,20 @@ public:
   void run()
   {
     if (is_enabled()) {
-      ucout << "Running " << m_name.c_str() << " session..." << std::endl;
+      ucout << "Running " << m_name.c_str() << " session...\n";
 
       if (!m_oauth2_config.token().is_valid_access_token()) {
         if (authorization_code_flow().get()) {
           m_http_config.set_oauth2(m_oauth2_config);
         } else {
-          ucout << "Authorization failed for " << m_name.c_str() << "." << std::endl;
+          ucout << "Authorization failed for " << m_name.c_str() << ".\n";
         }
       }
 
       run_internal();
     } else {
       ucout << "Skipped " << m_name.c_str()
-            << " session sample because app key or secret is empty. Please see instructions." << std::endl;
+            << " session sample because app key or secret is empty. Please see instructions.\n";
     }
   }
 
@@ -137,8 +137,8 @@ private:
   void open_browser_auth()
   {
     auto auth_uri(m_oauth2_config.build_authorization_uri(true));
-    ucout << "Opening browser in URI:" << std::endl;
-    ucout << auth_uri << std::endl;
+    ucout << "Opening browser in URI:\n";
+    ucout << auth_uri << "\n";
     open_browser(auth_uri);
   }
 };
@@ -162,9 +162,9 @@ protected:
   void run_internal() override
   {
     web::http::client::http_client api(U(m_api_url), m_http_config);
-    ucout << "Requesting account information:" << std::endl;
+    ucout << "Requesting account information:\n";
     ucout << "Information: " << api.request(web::http::methods::GET, U("account/info")).get().extract_json().get()
-          << std::endl;
+          << "\n";
   }
 };
 
