@@ -174,6 +174,11 @@ protected:
   }
 };
 
+void oauth2_trakt(std::ostream& os)
+{
+  os << "oauth2_trakt called\n";
+}
+
 int main(int /*argc*/, char** /*argv*/)
 {
   char const* trakt_key_ptr = std::getenv("TRAKT_KEY");
@@ -189,6 +194,8 @@ int main(int /*argc*/, char** /*argv*/)
   try {
     cli::SetColor();
     auto rootMenu = std::make_unique<cli::Menu>("trkt");
+    rootMenu->Insert(
+      "auth", [](std::ostream& os) { oauth2_trakt(os); }, "Perform Trakt OAuth2 authentication");
     cli::Cli cli(std::move(rootMenu));
     cli.ExitAction([](auto& os) { os << "Bye.\n"; });
     cli.StdExceptionHandler([](std::ostream& os, const std::string& cmd, const std::exception& e) {
