@@ -142,6 +142,35 @@ private:
   }
 };
 
+static char const* s_dropbox_key = "";
+static char const* s_dropbox_secret = "";
+
+//
+// Specialized class for Trakt.tv OAuth 2.0 session.
+//
+class trakt_session_sample : public oauth2_session_sample
+{
+public:
+  trakt_session_sample()
+    : oauth2_session_sample(U("Dropbox"),
+                            s_dropbox_key,
+                            s_dropbox_secret,
+                            U("https://www.dropbox.com/1/oauth2/authorize"),
+                            U("https://api.dropbox.com/1/oauth2/token"),
+                            U("http://localhost:8889/"))
+  {
+  }
+
+protected:
+  void run_internal() override
+  {
+    web::http::client::http_client api(U("https://api.dropbox.com/1/"), m_http_config);
+    ucout << "Requesting account information:" << std::endl;
+    ucout << "Information: " << api.request(web::http::methods::GET, U("account/info")).get().extract_json().get()
+          << std::endl;
+  }
+};
+
 int main(int /*argc*/, char** /*argv*/)
 {
   try {
