@@ -4,6 +4,7 @@
 #include <cpprest/http_listener.h>
 #include <fmt/format.h>
 
+#include <cstdlib> // getenv
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -142,24 +143,16 @@ private:
   }
 };
 
-static char const* s_dropbox_key = "";
-static char const* s_dropbox_secret = "";
-
 //
 // Specialized class for Trakt.tv OAuth 2.0 session.
 //
 class trakt_session_sample : public oauth2_session_sample
 {
 public:
-  trakt_session_sample()
-    : oauth2_session_sample(U("Dropbox"),
-                            s_dropbox_key,
-                            s_dropbox_secret,
-                            U("https://www.dropbox.com/1/oauth2/authorize"),
-                            U("https://api.dropbox.com/1/oauth2/token"),
-                            U("http://localhost:8889/"))
-  {
-  }
+  trakt_session_sample(const std::string& key, const std::string& secret)
+    : oauth2_session_sample(U("Dropbox"), key, secret, U("https://www.dropbox.com/1/oauth2/authorize"),
+                            U("https://api.dropbox.com/1/oauth2/token"), U("http://localhost:8889/"))
+  {}
 
 protected:
   void run_internal() override
@@ -173,6 +166,14 @@ protected:
 
 int main(int /*argc*/, char** /*argv*/)
 {
+  const std::string trakt_key = std::getenv("TRAKT_KEY");
+  const std::string trakt_secret = std::getenv("TRAKT_SECRET");
+
+  if (trakt_key.empty() || trakt_secret.empty()) {
+    std::cerr << "[ERROR] Both TRAKT_KEY and TRAKT_SECRET environment variables must be defined\n";
+    return -1;
+  }
+
   try {
     cli::SetColor();
     auto rootMenu = std::make_unique<cli::Menu>("trkt");
