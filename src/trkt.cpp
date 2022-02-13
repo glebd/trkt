@@ -151,6 +151,7 @@ class trakt_session_sample : public oauth2_session_sample
 {
 private:
   inline static char const* m_api_url = "https://api-staging.trakt.tv";
+  constexpr static int api_version = 2;
 
 public:
   trakt_session_sample(const std::string& key, const std::string& secret)
