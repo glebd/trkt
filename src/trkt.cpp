@@ -9,6 +9,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <utility>
 
 //
 // A simple listener class to capture OAuth 2.0 HTTP redirect to localhost.
@@ -26,15 +27,15 @@ private:
 
 public:
   oauth2_code_listener(web::uri listen_uri, web::http::oauth2::experimental::oauth2_config& config)
-    : m_listener(new web::http::experimental::listener::http_listener(listen_uri))
+    : m_listener(new web::http::experimental::listener::http_listener(std::move(listen_uri)))
     , m_config(config)
   {
-    m_listener->support([this](web::http::http_request request) -> void {
+    m_listener->support([this](const web::http::http_request& request) -> void {
       if (request.request_uri().path() == U("/") && !request.request_uri().query().empty()) {
         m_resplock.lock();
 
         m_config.token_from_redirected_uri(request.request_uri())
-          .then([this, request](pplx::task<void> token_task) -> void {
+          .then([this, request](const pplx::task<void>& token_task) -> void {
             try {
               token_task.wait();
               m_tce.set(true);
@@ -94,8 +95,9 @@ public:
   oauth2_session_sample(utility::string_t name, utility::string_t client_key, utility::string_t client_secret,
                         utility::string_t auth_endpoint, utility::string_t token_endpoint,
                         utility::string_t redirect_uri)
-    : m_oauth2_config(client_key, client_secret, auth_endpoint, token_endpoint, redirect_uri)
-    , m_name(name)
+    : m_oauth2_config(std::move(client_key), std::move(client_secret), std::move(auth_endpoint),
+                      std::move(token_endpoint), std::move(redirect_uri))
+    , m_name(std::move(name))
     , m_listener(new oauth2_code_listener(redirect_uri, m_oauth2_config))
   {}
 
@@ -132,7 +134,10 @@ protected:
   web::http::oauth2::experimental::oauth2_config m_oauth2_config;
 
 private:
-  bool is_enabled() const { return !m_oauth2_config.client_key().empty() && !m_oauth2_config.client_secret().empty(); }
+  [[nodiscard]] bool is_enabled() const
+  {
+    return !m_oauth2_config.client_key().empty() && !m_oauth2_config.client_secret().empty();
+  }
 
   void open_browser_auth()
   {
