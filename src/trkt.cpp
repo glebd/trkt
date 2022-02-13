@@ -176,8 +176,10 @@ protected:
 
 int main(int /*argc*/, char** /*argv*/)
 {
-  const std::string trakt_key = std::getenv("TRAKT_KEY");
-  const std::string trakt_secret = std::getenv("TRAKT_SECRET");
+  char const* trakt_key_ptr = std::getenv("TRAKT_KEY");
+  std::string const trakt_key = trakt_key_ptr ? trakt_key_ptr : "";
+  char const* trakt_secret_ptr = std::getenv("TRAKT_SECRET");
+  std::string const trakt_secret = trakt_secret_ptr ? trakt_secret_ptr : "";
 
   if (trakt_key.empty() || trakt_secret.empty()) {
     std::cerr << "[ERROR] Both TRAKT_KEY and TRAKT_SECRET environment variables must be defined\n";
