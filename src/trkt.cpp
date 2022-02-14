@@ -174,9 +174,10 @@ protected:
   }
 };
 
-void oauth2_trakt(std::ostream& os)
+void oauth2_trakt(std::ostream& os, std::string const& key, std::string const& secret)
 {
-  os << "oauth2_trakt called\n";
+  trakt_session_sample session(key, secret);
+  session.run();
 }
 
 int main(int /*argc*/, char** /*argv*/)
@@ -195,7 +196,8 @@ int main(int /*argc*/, char** /*argv*/)
     cli::SetColor();
     auto rootMenu = std::make_unique<cli::Menu>("trkt");
     rootMenu->Insert(
-      "auth", [](std::ostream& os) { oauth2_trakt(os); }, "Perform Trakt OAuth2 authentication");
+      "auth", [&](std::ostream& os) { oauth2_trakt(os, trakt_key, trakt_secret); },
+      "Perform Trakt OAuth2 authentication");
     cli::Cli cli(std::move(rootMenu));
     cli.ExitAction([](auto& os) { os << "Bye.\n"; });
     cli.StdExceptionHandler([](std::ostream& os, const std::string& cmd, const std::exception& e) {
